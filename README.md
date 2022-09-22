@@ -22,7 +22,7 @@ npm i glip-wallet-sdk
 yarn add glip-wallet-sdk
 ```
 
-### Add Directly to HTML
+### Add to HTML
 You can only directly add to HTML page.\
 
 This will add the variable ``glipWalletSDK``` to ```window``. You can access it using ```window.glipWalletSDK```
