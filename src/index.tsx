@@ -331,6 +331,21 @@ class GlipWallet {
     
 }
 
+let initializedGlipWallet: GlipWallet|boolean = false;
+const getGlipWallet = async (
+    chainId:number, authNetwork:string, clientIdentifier:string) => {
+        if(initializedGlipWallet) {
+        return initializedGlipWallet;
+    }
+    await glipWalletSDK.init({
+        chainId: chainId,
+        authNetwork: authNetwork,
+        clientIdentifier: clientIdentifier,
+    });
+    initializedGlipWallet = glipWalletSDK;
+    return glipWalletSDK;
+};
+
 let glipWalletSDK:GlipWallet = new GlipWallet();
 (window as any).glipWalletSDK = glipWalletSDK;
-export { glipWalletSDK };
+export { glipWalletSDK, getGlipWallet };
