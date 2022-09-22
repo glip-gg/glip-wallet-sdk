@@ -25,7 +25,7 @@ yarn add glip-wallet-sdk
 ### Add to HTML
 You can only directly add to HTML page.\
 
-This will add the variable ``glipWalletSDK``` to ```window``. You can access it using ```window.glipWalletSDK```
+This will add the variable ```glipWalletSDK``` to ```window```. You can access it using ```window.glipWalletSDK```
 
 ```
 <script src='https://live-nft-hosted-assets.s3.ap-south-1.amazonaws.com/bundle.js'></script>
