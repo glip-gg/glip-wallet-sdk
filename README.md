@@ -13,16 +13,16 @@ https://github.com/parth-choudhary/wallet-test
 
 ## Installation
 
-###NPM
+### NPM
 ```
 npm i glip-wallet-sdk
 ```
-###Yarn
+### Yarn
 ```
 yarn add glip-wallet-sdk
 ```
 
-###Add Directly to HTML
+### Add Directly to HTML
 You can only directly add to HTML page.\
 
 This will add the variable ``glipWalletSDK``` to ```window``. You can access it using ```window.glipWalletSDK```
