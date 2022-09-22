@@ -1,16 +1,34 @@
 # Glip Wallet JS Docs
-Guide for installation and usage of Glip's Web3 walllet.
+
+Guide for installation and usage of Glip's Web3 Wallet.\
+Glip Wallet through its SDK provides a signer using which a user's transaction can be signed.\
+It also contains a iframe based UI element which can be embedded into any webpage.\
+The UI contains features to check balance, change currency, transfer and swap tokens.\
+
+Demo app link:
+```
+https://github.com/parth-choudhary/wallet-test
+```
+
 
 ## Installation
 
-NPM
+####NPM
 ```
 npm i glip-wallet-sdk
 ```
-Yarn
+####Yarn
 ```
 yarn add glip-wallet-sdk
 ```
+```
+####Add Directly to HTML
+You can only directly add to HTML page.
+This will add the variable ``glipWalletSDK``` to ```window``. You can access it using\
+```window.glipWalletSDK```
+```
+<script src='https://live-nft-hosted-assets.s3.ap-south-1.amazonaws.com/bundle.js'></script>
+
 ## Usage
 
 ### Initialization
@@ -70,7 +88,7 @@ let isConnected = await glipWallet.isConnected();
 console.log(isConnected); // will be a boolean.
 ```
 
-## logout
+### logout
 ```await glipWallet.logout()```
 
 
