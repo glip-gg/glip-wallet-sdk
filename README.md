@@ -42,8 +42,7 @@ First we need to ensure a div with id `glip-wallet` in the html body.
 
 ```js
 
-It is best to create a method to get the client id. This method will require you
-to use your client identifier.
+It is best to keep the initilization code in a seprate file.
 ```js
 import { getGlipWallet } from 'glip-wallet-sdk/wallet';
 let initializedGlipWallet = false;
@@ -58,13 +57,11 @@ const getInitializedGlipWallet = async () => {
 };
 
 export default getInitializedGlipWallet;
-export default getGlipWallet;
-
 ```
 
 Now you can import glip wallet anywhere you need in your app and no need to re re-initialize it.
 ```js
-  let glipWallet = await getGlipWallet()
+  let glipWallet = await getInitializedGlipWallet()
 ```
 
 
