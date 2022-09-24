@@ -43,6 +43,7 @@ First we need to ensure a div with id `glip-wallet` in the html body.
 ```js
 
 It is best to keep the initilization code in a seprate file.
+
 ```js
 import { getGlipWallet } from 'glip-wallet-sdk/wallet';
 let initializedGlipWallet = false;
