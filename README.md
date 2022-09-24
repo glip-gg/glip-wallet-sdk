@@ -6,8 +6,14 @@ It also contains a iframe based UI element which can be embedded into any webpag
 The UI contains features to check balance, change currency, transfer and swap tokens.\
 
 Demo app link:
+
+[Demo App](https://glip-gg.github.io/glip-js-wallet-sdk-example/)
+
+Demo app code link:
+
+[Demo App Code](https://github.com/glip-gg/wallet-test)
 ```
-https://github.com/parth-choudhary/wallet-test
+
 ```
 
 
@@ -38,22 +44,23 @@ First we need to ensure a div with id `glip-wallet` in the html body.
 ```<div id="glip-wallet"></div>```
 
 ```js
-import { glipWalletSDK } from 'glip-wallet-sdk/wallet';
+
+It is best to create a method to get the client id. This method will require you
+to use your client identifier.
+```js
+import { getGlipWallet } from 'glip-wallet-sdk/wallet';
 let initializedGlipWallet = false;
 
-const getGlipWallet = async () => {
-    if(initializedGlipWallet) {
-        return initializedGlipWallet;
-    }
-    await glipWalletSDK.init({
+const getInitializedGlipWallet = async () => {
+    return await getGlipWallet({
         chainId: 80001,
         authNetwork: 'cyan',
         clientIdentifier: '63020e1ef81e3742a278846a'
     });
-    initializedGlipWallet = glipWalletSDK;
     return glipWalletSDK;
 };
 
+export default getInitializedGlipWallet;
 export default getGlipWallet;
 
 ```
