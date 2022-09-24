@@ -144,7 +144,7 @@ glipWallet.hideWallet();
 ```
 
 ## Example Usage using ethers library to transfer erc20 token
-### Show the wallet UI
+### Transfer ERC20 token with ethers and glipWallet.
 ```js
     
     import { ethers } from "ethers";
