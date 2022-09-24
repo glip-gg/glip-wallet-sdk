@@ -12,9 +12,6 @@ Demo app link:
 Demo app code link:
 
 [Demo App Code](https://github.com/glip-gg/wallet-test)
-```
-
-```
 
 
 ## Installation
@@ -34,7 +31,7 @@ You can only directly add to HTML page.
 This will add the variable ```glipWalletSDK``` to ```window```. You can access it using ```window.glipWalletSDK```
 
 ```
-<script src='https://live-nft-hosted-assets.s3.ap-south-1.amazonaws.com/bundle.js'></script>
+<script src='https://cdn.jsdelivr.net/npm/glip-wallet-sdk@1.0.109/dist/bundle.js'></script>
 ```
 ## Usage
 
@@ -146,6 +143,38 @@ glipWallet.showWallet();
 ### Hide the wallet UI
 ```js
 glipWallet.hideWallet();
+```
+
+## Example Usage using ethers library to transfer erc20 token
+### Show the wallet UI
+```js
+    
+    import { ethers } from "ethers";
+    import { abiERC20 } from '@metamask/metamask-eth-abis';
+     
+    const transferNFT = async () => {
+        let toAddress = "0x6203A4a2c3c58bEA165b72012303Dbd8FF938B1b";
+        let glipWallet = await getGlipWallet();
+        let myAddress = (await glipWallet.getUserInfo()).publicAddress;
+        console.log('myAddress', myAddress);
+        const quantity = 1;
+        const contractAddress = "0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d";
+        const erc20_rw = new ethers.Contract(address, abiERC20);
+        const tx = await erc20_rw.populateTransaction['transfer'](
+            myAddress,
+            toAddress,
+            quantity
+        );
+        let signer = await glipWallet.getSigner();
+        let signedTransaction;
+        try{
+            signedTransaction = await signer.signTransaction(tx);
+        }
+        catch(e){
+            console.log('error', e);
+        }
+        return signedTransaction;
+    }
 ```
 
 <!---
