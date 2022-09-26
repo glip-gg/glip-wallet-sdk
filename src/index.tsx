@@ -162,10 +162,11 @@ class GlipWallet {
         walletDiv.style.position = "fixed";
         walletDiv.style.top = "0";
         walletDiv.style.right = "0";
+        walletDiv.style.zIndex = "2323123";
         this.walletDiv = walletDiv;
         // insert div into top of body.
         document.body.insertBefore(walletDiv, document.body.firstChild);
-        this.walletDiv.innerHTML = "<img src='https://live-nft-hosted-assets.s3.ap-south-1.amazonaws.com/cancel_icon.svg' style='position:absolute;left: -20px;background: black;padding: 3px;top: 1px;' onclick='window.glipWalletSDK.hideWallet()'/>"
+        this.walletDiv.innerHTML = "<img src='https://live-nft-hosted-assets.s3.ap-south-1.amazonaws.com/cancel_icon.svg' style='position:absolute;left: -20px;background: black;padding: 3px;border-radius:50%' onclick='window.glipWalletSDK.hideWallet()'/>"
         this._createIframe(walletDiv);
     }
 
@@ -176,7 +177,7 @@ class GlipWallet {
         this.walletIframe.style.height = "600px";
         this.walletIframe.style.width = "341px";
         this.walletIframe.style.border = "0px";
-        
+        this.walletIframe.style.borderRadius  = "3%";
     };
 
     hideWallet(){
@@ -307,8 +308,7 @@ class GlipWallet {
                 false,
                 this.chainId,
                 this.socketUUID,
-                provider,
-                
+                provider,                
             );
             return this.glipSigner;
         }
