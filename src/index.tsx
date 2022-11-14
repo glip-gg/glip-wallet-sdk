@@ -84,6 +84,10 @@ class GlipWallet {
                     console.log('parsedData', parsedData);
                     (await this.getSigner()).handleTransactionResponse(parsedData);
                 }
+                if(parsedData.type === "signedMessageRetVal"){
+                    console.log('parsedData', parsedData);
+                    (await this.getSigner()).handleMessageResponse(parsedData);
+                }
             });
             socket.on('data', (data:any) => {
                 console.log('data', data);
