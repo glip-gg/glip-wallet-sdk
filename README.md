@@ -11,7 +11,7 @@ Demo app link:
 
 Demo app code link:
 
-[Demo App Code](https://github.com/glip-gg/wallet-test)
+[Demo App Code](https://github.com/glip-gg/glip-js-wallet-sdk-example)
 
 
 ## Installation
