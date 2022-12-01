@@ -69,24 +69,23 @@ class GlipWallet {
         // create a new uuid
         const uuid = uuidv4();
         this.socketUUID = uuid;
-        console.log('socket uuid', uuid);
         const socket = io(WEB_SOCKET_URI, {
             transports: ['websocket'],
             query: {roomId: uuid}
         });
         this.connectedSocket = socket;
-        console.log('socket initializing');
         socket.on('connect', () => {
             socket.on('message', async (data: any) => {
-                console.log('data', data);
                 let parsedData = JSON.parse(data.data);
                 if(parsedData.type === "signedTransactionRetVal"){
-                    console.log('parsedData', parsedData);
                     (await this.getSigner()).handleTransactionResponse(parsedData);
                 }
                 if(parsedData.type === "signedMessageRetVal"){
-                    console.log('parsedData', parsedData);
-                    (await this.getSigner()).handleMessageResponse(parsedData);
+                    (await this.getSigner()).handleMessageResponse(
+                        parsedData);
+                }
+                if(parsedData.type === "loginDone"){
+                    this.loginDoneCB(parsedData.address);
                 }
             });
             socket.on('data', (data:any) => {
@@ -194,32 +193,39 @@ class GlipWallet {
         createLoginModal(this);
     }
 
-    login(
-        loginType:string,
-        lastLocation:string,
-        opts:any){
+    
+
+    private loginDoneCB:any;
+    private loginDoneCBRejected:any;
+    login(loginType:string, lastLocation:string, opts:any){
         if(loginType === 'google'){
-            const glipRedirectURL = `https://glip.gg/wallet-login/`
+            const glipRedirectURL = `https://glip.gg/wallet-login/`;
             const glipGoogleOpts = {
                 'scope': 'https://www.googleapis.com/auth/userinfo.profile+https://www.googleapis.com/auth/userinfo.email',
                 'redirect_uri': glipRedirectURL,
                 client_id:'373196446500-ojt3ko1ghis9pritfhhogohlotut2hv6.apps.googleusercontent.com',
-            }
+            };
             const currState = {
                 lastLocation: lastLocation,
                 clientIdentifier: this.clientIdentifier,
-
-            }
+                socketUUID: this.socketUUID
+            };
             const currOpts = opts || glipGoogleOpts;
-            const GOOGLE_OAUTH_URL = `https://accounts.google.com/o/oauth2/v2/auth?scope=${currOpts['scope']}&response_type=code&redirect_uri=${currOpts.redirect_uri}&client_id=${glipGoogleOpts.client_id}&access_type=offline&state=${JSON.stringify(currState)}`
-            window.location.href = GOOGLE_OAUTH_URL;
-            //window.location.href](https://window.location.href/) = `${GLIP_WALLET_LOGIN_URL}?loginType=${loginType}&lastLocation=${lastLocation}`;
-             
+            let currStateString = JSON.stringify(currState);
+            //url encode the state
+            currStateString = encodeURIComponent(currStateString);
+            const GOOGLE_OAUTH_URL = `https://accounts.google.com/o/oauth2/v2/auth?scope=${currOpts['scope']}&response_type=code&redirect_uri=${currOpts.redirect_uri}&client_id=${glipGoogleOpts.client_id}&access_type=offline&state=${currStateString}`;
+            return new Promise((resolve:any, reject:any) => {
+                this.loginDoneCB = resolve;
+                this.loginDoneCBRejected = reject;
+                (window as any).open(
+                    GOOGLE_OAUTH_URL, '_blank').focus();
+            });
+            //window.location.href = GOOGLE_OAUTH_URL;
         }
         return;
-        //(window as any).location = `${GLIP_WALLET_LOGIN_URL}?loginType=${loginType}&authNetwork=${this.authNetwork}&lastLocation=${lastLocation}&clientIdentifier=${this.clientIdentifier}&chain=${this.chainId}`;
     }
-                
+    
 
 
     private getUserInfoCB:any;
