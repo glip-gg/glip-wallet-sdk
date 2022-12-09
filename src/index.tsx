@@ -20,13 +20,13 @@ function createLoginModal(glipWallet:any){
 }
 
 
-//const GLIP_WALLET_BASE_URL = `https://glip.gg/wallet-host/`;
-//const GLIP_WALLET_IFRAME_URL = `https://glip.gg/wallet-host/`;
+const GLIP_WALLET_BASE_URL = `https://glip.gg/wallet-host/`;
+const GLIP_WALLET_IFRAME_URL = `https://glip.gg/wallet-host/`;
 
 const GLIP_WALLET_LOGIN_URL = `https://glip.gg/wallet-login/`;
 
-const GLIP_WALLET_BASE_URL = `http://localhost:3000/wallet-host/`;
-const GLIP_WALLET_IFRAME_URL = `http://localhost:3000/wallet-host/`;
+//const GLIP_WALLET_BASE_URL = `http://localhost:3000/wallet-host/`;
+//const GLIP_WALLET_IFRAME_URL = `http://localhost:3000/wallet-host/`;
 //const GLIP_WALLET_LOGIN_URL = `http://localhost:3000/`;
 
 type onLoginChangeCBTYpe = (isLoggedIn:boolean) => void;

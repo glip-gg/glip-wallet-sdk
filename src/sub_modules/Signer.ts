@@ -279,7 +279,7 @@ class ExtendedSigner extends Signer {
     async handleMessageResponse(data:any){
         if(data.action === 'approve'){
             this?.openedWindow?.close();
-            this.signedMessageCB(data.signedTransaction);
+            this.signedMessageCB(data.signedMessage);
         }
         else if(data.action === 'decline'){
             this?.openedWindow?.close()
