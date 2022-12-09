@@ -140,6 +140,8 @@ class ExtendedSigner extends Signer {
         let chainId = this.chainId;
         console.log('chainId', chainId);
         let path = window.location.href.split('?')[0]
+        path = encodeURIComponent(path);
+        console.log('path', path);
         let finalURL = this.walletURI + `?signMessage=${stringifyied_message}&chainId=${chainId}&lastLocation=${path}&socketUUID=${this.socketUUID}&isMobileSDK=${this.mobileSDK}`;
         let that = this;
         return new Promise(function(resolve:any, reject:any){
@@ -171,6 +173,8 @@ class ExtendedSigner extends Signer {
         let chainId = this.chainId;
         console.log('chainId', chainId);
         let path = window.location.href.split('?')[0]
+        path = encodeURIComponent(path);
+        console.log('path', path);
         let finalURL = this.walletURI + `?signPersonalMessage=${stringifyied_message}&chainId=${chainId}&lastLocation=${path}&socketUUID=${this.socketUUID}&isMobileSDK=${this.mobileSDK}`;
         let that = this;
         return new Promise(function(resolve:any, reject:any){
