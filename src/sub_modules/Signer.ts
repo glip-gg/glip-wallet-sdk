@@ -249,15 +249,19 @@ class ExtendedSigner extends Signer {
         }
     }
     
-    async sendTransaction(transaction: ethersUtils.Deferrable<providers.TransactionRequest>): Promise<providers.TransactionResponse> {
+    async sendTransaction(
+        transaction: ethersUtils.Deferrable<providers.TransactionRequest>,
+        overviewMessage?:string,
+        mobileSDK?:boolean,): Promise<providers.TransactionResponse> {
         console.log('sendTransaction');
         if(!this.provider) {
             this.provider = await getInternalProvider(this.chainId);
         }
         this._checkProvider("sendTransaction");
         console.log('transaction', transaction);
-        const tx = await this.populateTransaction(transaction);
-        const signedTx = await this.signTransaction(tx);
+        //let tx = await ethersUtils.resolveProperties(transaction);
+        const signedTx = await this.signTransaction(
+            transaction, overviewMessage, mobileSDK);
         console.log('signedTx', signedTx);
         let sendingTx = await (this.provider as providers.Provider).sendTransaction(signedTx);
         console.log('sendingTx', sendingTx);
