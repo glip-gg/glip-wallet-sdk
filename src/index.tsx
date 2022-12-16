@@ -5,6 +5,7 @@ import { io } from 'socket.io-client';
 import MainComponent from './components/Main';
 import GlipSigner from './sub_modules/Signer';
 import GlipProvider from './sub_modules/Provider';
+import { getInternalProvider } from './internalProviderService';
 import { providers } from "ethers";
 import { v4 as uuidv4 } from 'uuid';
 
@@ -20,13 +21,13 @@ function createLoginModal(glipWallet:any){
 }
 
 
-const GLIP_WALLET_BASE_URL = `https://glip.gg/wallet-host/`;
-const GLIP_WALLET_IFRAME_URL = `https://glip.gg/wallet-host/`;
+//const GLIP_WALLET_BASE_URL = `https://glip.gg/wallet-host/`;
+//const GLIP_WALLET_IFRAME_URL = `https://glip.gg/wallet-host/`;
 
 const GLIP_WALLET_LOGIN_URL = `https://glip.gg/wallet-login/`;
 
-//const GLIP_WALLET_BASE_URL = `http://localhost:3000/wallet-host/`;
-//const GLIP_WALLET_IFRAME_URL = `http://localhost:3000/wallet-host/`;
+const GLIP_WALLET_BASE_URL = `http://localhost:3000/wallet-host/`;
+const GLIP_WALLET_IFRAME_URL = `http://localhost:3000/wallet-host/`;
 //const GLIP_WALLET_LOGIN_URL = `http://localhost:3000/`;
 
 type onLoginChangeCBTYpe = (isLoggedIn:boolean) => void;
@@ -50,6 +51,7 @@ class GlipWallet {
     socketUUID:string = '';
     walletDiv:any;
     walletIframe:any;
+    provider:any;
 
     private glipSigner:GlipSigner|null;
     
@@ -107,7 +109,6 @@ class GlipWallet {
             });
         });
     }
-
     
     private initCB:any;
     private initRejectCB:any;
@@ -139,6 +140,23 @@ class GlipWallet {
                     clientIdentifier: this.clientIdentifier
                 }}, '*');
         }
+    }
+
+    async getAddress(){
+        let userInfo:any = await this.getUserInfo()
+        return userInfo.publicAddress;
+    }
+
+    async getBalance(){
+        if(!this.provider){
+            this.provider = await this.getProvider();
+        }
+        if(await this.isConnected()){
+            console.log('getBalance', this.provider);
+            return this.provider.getBalance(
+                await this.getAddress());
+        }
+        return 0;
     }
     
     _createIframe(iframeContainerDiv:any){
@@ -224,8 +242,6 @@ class GlipWallet {
         return;
     }
     
-
-
     private getUserInfoCB:any;
     private getUserInfoRejectCB:any;
     getUserInfo(){
@@ -303,11 +319,22 @@ class GlipWallet {
         }
     }
 
+    async getProvider() {
+        const provider = await getInternalProvider((this.chainId as number));
+        return provider;
+    }
+    
     async getSigner(provider?: providers.Provider){
         if(this.glipSigner){
             return this.glipSigner;
         }
         let isConnected = await this.isConnected()
+        if(!provider){
+            provider = await this.getProvider();
+            if(!this.provider){
+                this.provider = provider;
+            }
+        }
         if(isConnected){
             let userInfo:any = await this.getUserInfo()
             this.glipSigner = new GlipSigner(

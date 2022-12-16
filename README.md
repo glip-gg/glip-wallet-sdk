@@ -107,6 +107,13 @@ console.log(userInfo.name);
 console.log(userInfo.profileImage);
 console.log(userInfo.publicAddress);
 ```
+
+### getUserBalance
+Get details about the logged in user.
+```js
+let balance = await glipWallet.getBalance();
+console.log(balance);
+```
 <!---
 ### getWalletId
 Get the Glip walletID of the logged in user, You can use this to transfer NFT to some other user.
@@ -122,8 +129,34 @@ let signer = await glipWallet.getSigner();
 let displayMessage = "This transaction transfers 0 value";
 let signedTx = signer.signTransaction({
     to: '0x0000000000000000000000000000000000000000',
-    value: '0x0',
-    data: '0x0',
+    value: '0x00',
+    data: '0x00',
+    chainId: 137,
+    nonce: 0,
+    gasPrice: 0,
+    gasLimit: 0,
+    from: '0x0000000000000000000000000000000000000000'
+}, displayMessage);
+console.log(signedTx);
+```
+### signMessage
+Sign a message using the user's private key. This will redirect the user to glipgg in mobile.
+```js
+let signer = await glipWallet.getSigner();
+let displayMessage = "This transaction transfers 0 value";
+let signedMessage = await signer.signMessage("wow bro \n wow");
+console.log(signedMessage);
+```
+
+### sendTransaction
+Signs and sends a transaction using the user's private key. This will redirect the user to glipgg in mobile.
+```js
+let signer = await glipWallet.getSigner();
+let displayMessage = "This transaction transfers 0 value";
+let signedTx = signer.sendTransaction({
+    to: '0x0000000000000000000000000000000000000000',
+    value: '0x00',
+    data: '0x00',
     chainId: 137,
     nonce: 0,
     gasPrice: 0,

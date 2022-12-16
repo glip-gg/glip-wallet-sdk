@@ -138,7 +138,6 @@ class ExtendedSigner extends Signer {
         //TODO: check if message is url encoded string
         let stringifyied_message = message;
         let chainId = this.chainId;
-        console.log('chainId', chainId);
         let path = window.location.href.split('?')[0]
         path = encodeURIComponent(path);
         console.log('path', path);
@@ -224,6 +223,7 @@ class ExtendedSigner extends Signer {
             chainId = <number>tx.chainId;
         }
         let path = window.location.href.split('?')[0]
+        path = encodeURIComponent(path);
         let finalURL = this.walletURI + `?signTransaction=${stringifyied_tx}&chainId=${chainId}&lastLocation=${path}&socketUUID=${this.socketUUID}&isMobileSDK=${this.mobileSDK}`;
         if(overviewMessage){
             finalURL += `&overviewMessage=${overviewMessage}`;
@@ -261,7 +261,7 @@ class ExtendedSigner extends Signer {
         console.log('signedTx', signedTx);
         let sendingTx = await (this.provider as providers.Provider).sendTransaction(signedTx);
         console.log('sendingTx', sendingTx);
-        return sendingTx;        
+        return sendingTx;
     }
 
 
@@ -288,4 +288,5 @@ class ExtendedSigner extends Signer {
     }
 
 }
+
 export default ExtendedSigner;
