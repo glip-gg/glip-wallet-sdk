@@ -136,7 +136,7 @@ class ExtendedSigner extends Signer {
                       isMobileSDK?:boolean): Promise<string>{
         this.mobileSDK = isMobileSDK || false;
         //TODO: check if message is url encoded string
-        let stringifyied_message = message;
+        let stringifyied_message = encodeURIComponent(message as any);
         let chainId = this.chainId;
         let path = window.location.href.split('?')[0]
         path = encodeURIComponent(path);
