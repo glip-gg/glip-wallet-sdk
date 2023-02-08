@@ -221,12 +221,16 @@ class GlipWallet {
                 'redirect_uri': glipRedirectURL,
                 client_id:'373196446500-ojt3ko1ghis9pritfhhogohlotut2hv6.apps.googleusercontent.com',
             };
-            const currState = {
+            const currState:any = {
                 lastLocation: lastLocation,
                 clientIdentifier: this.clientIdentifier,
                 socketUUID: this.socketUUID
             };
-            const currOpts = opts || glipGoogleOpts;
+            if(opts.isMobileSDK){
+                //delete socketUUID from currState
+                delete currState['socketUUID'];
+            }
+            const currOpts = glipGoogleOpts;
             let currStateString = JSON.stringify(currState);
             //url encode the state
             currStateString = encodeURIComponent(currStateString);
@@ -234,6 +238,10 @@ class GlipWallet {
             return new Promise((resolve:any, reject:any) => {
                 this.loginDoneCB = resolve;
                 this.loginDoneCBRejected = reject;
+                if(opts.isMobileSDK){
+                    window.open(GOOGLE_OAUTH_URL, '_self');
+                    return;
+                }
                 (window as any).open(
                     GOOGLE_OAUTH_URL, '_blank').focus();
             });
