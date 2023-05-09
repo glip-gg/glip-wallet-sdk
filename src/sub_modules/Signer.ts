@@ -109,6 +109,9 @@ class ExtendedSigner extends Signer {
         if (provider && !providers.Provider.isProvider(provider)) {
             throw (`invalid provider provided`);
         }
+        if(provider){
+            this.connect(provider);
+        }
         console.log('this provider', this.provider);
         this.address = address;
         this.walletURI = walletURI + SIGNER_EXTENSION_URL;

@@ -214,6 +214,9 @@ class GlipWallet {
     private loginDoneCB:any;
     private loginDoneCBRejected:any;
     login(loginType:string, lastLocation:string, opts:any){
+        if(!opts){
+            opts = {};
+        }
         if(loginType === 'google'){
             const glipRedirectURL = `https://glip.gg/wallet-login/`;
             const glipGoogleOpts = {
@@ -337,12 +340,16 @@ class GlipWallet {
             return this.glipSigner;
         }
         let isConnected = await this.isConnected()
+        console.log('provider1', provider);
         if(!provider){
             provider = await this.getProvider();
             if(!this.provider){
                 this.provider = provider;
             }
+            console.log('provider2', provider);
         }
+        console.log('provider3', provider);
+        
         if(isConnected){
             let userInfo:any = await this.getUserInfo()
             this.glipSigner = new GlipSigner(
